@@ -10,10 +10,10 @@ on:
       - '.github/workflows/auto-build.yml'
 
 env:
-  TORCH_VERSION: "2.7.0"  # PyTorch 版本号
+  TORCH_VERSION: "2.7.1"  # PyTorch 版本号
   CUDA_VERSION: "12.6.3"  # CUDA 版本号
   UBUNTU_VERSION: "24.04"  # Ubuntu 版本号
-  PYTHON_VERSION: "3.12.9"  # Python 版本号
+  PYTHON_VERSION: "3.12.10"  # Python 版本号
 
 jobs:
   build-and-push:
