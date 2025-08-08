@@ -17,7 +17,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends build-essential
     liblzma-dev ca-certificates
 
 # 安装 pyenv 并构建 Python
-RUN git clone --branch v2.6.1 https://github.com/pyenv/pyenv.git $PYENV_ROOT && \
+RUN git clone --branch v2.6.6 https://github.com/pyenv/pyenv.git $PYENV_ROOT && \
     pyenv install $PYTHON_VERSION && pyenv global $PYTHON_VERSION && python -m pip install --upgrade pip
 
 COPY entrypoint.sh /entrypoint.sh

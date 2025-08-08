@@ -9,7 +9,7 @@
 ### ✅ 直接使用（推荐）
 
 1. 访问 [Docker Hub 页面](https://hub.docker.com/r/mortonli/torch-cuda-runtime) ，并选择所需的镜像标签  
-    例如：`torch2.7.0-cu12.6.3-cudnn9.5.1-ubuntu24.04`
+    例如：`torch2.7.1-cu12.6.3-cudnn9.5.1-ubuntu24.04`
 2. 配置环境变量 `ROOT_PASSWORD` 或 `ROOT_AUTHORIZED_KEY`：
    - `ROOT_PASSWORD`：容器启动时自动配置的 root 密码
    - `ROOT_AUTHORIZED_KEY`：容器启动时自动配置的 SSH 公钥
