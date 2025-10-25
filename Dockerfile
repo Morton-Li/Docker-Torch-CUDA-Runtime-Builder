@@ -17,7 +17,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends build-essential
     liblzma-dev ca-certificates
 
 # 安装 pyenv 并构建 Python
-RUN git clone --branch v2.6.6 https://github.com/pyenv/pyenv.git $PYENV_ROOT && \
+RUN git clone --branch v2.6.11 https://github.com/pyenv/pyenv.git $PYENV_ROOT && \
     pyenv install $PYTHON_VERSION && pyenv global $PYTHON_VERSION && python -m pip install --upgrade pip
 
 COPY entrypoint.sh /entrypoint.sh
@@ -49,9 +49,9 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/* && \
     echo 'eval "$(pyenv init - bash)"' >> ~/.bashrc
 
 # 安装 PyTorch
-RUN pip install torch==${TORCH_VERSION}+cu126 tensorboard \
+RUN pip install torch==${TORCH_VERSION}+cu128 tensorboard \
     --no-cache-dir \
-    --index-url https://download.pytorch.org/whl/cu126 \
+    --index-url https://download.pytorch.org/whl/cu128 \
     --extra-index-url https://pypi.org/simple
 
 # 验证

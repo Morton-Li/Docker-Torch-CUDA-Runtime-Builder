@@ -5,15 +5,12 @@ on:
   push:
     branches:
       - main
-    paths:
-      - 'Dockerfile'
-      - '.github/workflows/auto-build.yml'
 
 env:
-  TORCH_VERSION: "2.8.0"  # PyTorch 版本号
-  CUDA_VERSION: "12.6.3"  # CUDA 版本号
-  UBUNTU_VERSION: "24.04"  # Ubuntu 版本号
-  PYTHON_VERSION: "3.12.10"  # Python 版本号
+  TORCH_VERSION: "2.9.0"      # PyTorch 版本号
+  CUDA_VERSION: "12.8.1"      # CUDA 版本号
+  UBUNTU_VERSION: "24.04"     # Ubuntu 版本号
+  PYTHON_VERSION: "3.12.10"   # Python 版本号
 
 jobs:
   build-and-push:
@@ -33,7 +30,7 @@ jobs:
         id: tag
         run: |
           IMAGE_TAG=torch${{ env.TORCH_VERSION }}-cu${{ env.CUDA_VERSION }}-cudnn-ubuntu${{ env.UBUNTU_VERSION }}
-          echo "IMAGE_TAG=$IMAGE_TAG" >> $GITHUB_ENV
+          echo "IMAGE_TAG=$IMAGE_TAG" >> $GITHUB_OUTPUT
 
       - name: Build Docker image
         run: |
@@ -42,10 +39,10 @@ jobs:
             --build-arg CUDA_VERSION=${{ env.CUDA_VERSION }} \
             --build-arg UBUNTU_VERSION=${{ env.UBUNTU_VERSION }} \
             --build-arg PYTHON_VERSION=${{ env.PYTHON_VERSION }} \
-            -t ${{ secrets.DOCKER_USERNAME }}/torch-cuda-runtime:${{ env.IMAGE_TAG }} .
-          docker tag ${{ secrets.DOCKER_USERNAME }}/torch-cuda-runtime:${{ env.IMAGE_TAG }} ${{ secrets.DOCKER_USERNAME }}/torch-cuda-runtime:latest
+            -t ${{ secrets.DOCKER_USERNAME }}/torch-cuda-runtime:${{ steps.tag.outputs.IMAGE_TAG }} .
+          docker tag ${{ secrets.DOCKER_USERNAME }}/torch-cuda-runtime:${{ steps.tag.outputs.IMAGE_TAG }} ${{ secrets.DOCKER_USERNAME }}/torch-cuda-runtime:latest
 
       - name: Push Docker image
         run: |
-          docker push ${{ secrets.DOCKER_USERNAME }}/torch-cuda-runtime:${{ env.IMAGE_TAG }}
+          docker push ${{ secrets.DOCKER_USERNAME }}/torch-cuda-runtime:${{ steps.tag.outputs.IMAGE_TAG }}
           docker push ${{ secrets.DOCKER_USERNAME }}/torch-cuda-runtime:latest
